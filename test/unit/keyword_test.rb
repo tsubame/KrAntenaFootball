@@ -20,7 +20,34 @@ class KeywordTest < ActiveSupport::TestCase
     
     p multi_words
   end
+  
+  #
+  #
+  #
+  test "get_count_of_words" do
+    words = ["エジル", "ユナイテッド", "の", "ユナイテッド", "エジル", "エジル", "の", "あ", "サッカー"]
+    word = "エジル"
+    expected = 3
+    res = @keyword.get_count_of_words(words, word)
+    assert_equal expected, res
+    
+    words = ["エジル", "ユナイテッド", nil, "ユナイテッド", "エジル", "エジル", "", 33, "サッカー"]
+    word = "ユナイテッド"
+    expected = 2
+    res = @keyword.get_count_of_words(words, word)
+    assert_equal expected, res
+  end
 
+  # get_multiple_words_to_hash
+  #
+  #
+  test "get_multiple_words_to_hash" do
+    words = ["エジル", "エジル", "ユナイテッド", "の", "ユナイテッド", "ユナイテッド", "エジル", "エジル", "あ", "サッカー"]
+    expected = {"エジル" => 4, "ユナイテッド" => 3}      
+    res = @keyword.get_multiple_words_to_hash(words)
+    assert_equal expected, res
+  end
+  
   # get_multiple_words 正常に取り出せるか
   #
   # 
@@ -58,13 +85,23 @@ class KeywordTest < ActiveSupport::TestCase
     assert_equal expected, res
   end
   
-  # get_multiple_words 正常に取り出せるか
+  # remove_ng_word 正常に取り出せるか
   #
   # 
   test "remove_ng_word" do
     words = ["エジル", "ユナイテッド", "ゴール", "FW", "サッカー"]
     expected = ["エジル", "ユナイテッド"]      
     res = @keyword.remove_ng_word(words)
+    assert_equal expected, res
+  end
+  
+  # remove_ng_word_from_hash 正常に取り出せるか
+  #
+  # 
+  test "remove_ng_word_from_hash" do
+    words = {"エジル" => 4, "ユナイテッド" => 1, "ゴール" => 3, "FW" => 2, "サッカー" => 2}
+    expected = {"エジル" => 4, "ユナイテッド" => 1}
+    res = @keyword.remove_ng_word_from_hash(words)
     assert_equal expected, res
   end
   

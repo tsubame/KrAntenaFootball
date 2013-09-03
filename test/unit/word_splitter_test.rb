@@ -23,7 +23,7 @@ class WordSplitterTest < ActiveSupport::TestCase
     res = @splitter.split_str_to_words(str)
 
     res.each do |r|
-      puts r
+      #puts r
     end
     
     assert_equal expected, res
@@ -50,19 +50,49 @@ class WordSplitterTest < ActiveSupport::TestCase
     assert_equal expected, res
   end
   
+  #
+  # pickup_nounのテスト
+  # 正常に結果が取得出来る
+  #
+  test "pickup_noun 正常に結果が取得できる" do
+    
+    str = "ユナイテッド加入のフェライニ、古巣から連続ゴールを決める" 
+    expected = ["ユナイテッド", "フェライニ", "古巣", "ゴール"]
+    res = @splitter.pickup_noun(str)    
+    assert_equal expected, res
+    res.each do |r|
+      puts r
+    end
+    
+    str = "モウリーニョ、ジダン、S・ラモスがベイル移籍を語る"
+    expected = ["モウリーニョ", "ジダン", "ラモス", "ベイル"]
+    res = @splitter.pickup_noun(str) 
+    res.each do |r|
+      puts r
+    end
+    assert_equal expected, res
+    
+    str = "長谷部「すっきりした」＝ニュルンベルク移籍で―独サッカー"
+    expected = ["長谷部", "ニュルンベルク", "サッカー"]
+    res = @splitter.pickup_noun(str) 
+    res.each do |r|
+      puts r
+    end
+    assert_equal expected, res
+  end
   
   
   
   
-  
-  
+=begin  
+
   #
   # http_getのテスト
   # Webリクエストが正常に発行できる
   #
   test "http_get Webリクエストが正常に発行できる" do
     url = 'http://sportsnavi.yahoo.co.jp/'
-    res = @keyword.http_get(url)
+    res = @splitter.http_get(url)
     assert_not_equal nil, res
   end
   
@@ -72,23 +102,23 @@ class WordSplitterTest < ActiveSupport::TestCase
   #
   test "http_get 不正なURLを渡した場合" do
     url = 'h'
-    res = @keyword.http_get(url)
+    res = @splitter.http_get(url)
     assert_equal nil, res
     
     url = '有頂天家族'
-    res = @keyword.http_get(url)
+    res = @splitter.http_get(url)
     assert_equal nil, res
     
     url = ''
-    res = @keyword.http_get(url)
+    res = @splitter.http_get(url)
     assert_equal nil, res
     
     url = 33
-    res = @keyword.http_get(url)
+    res = @splitter.http_get(url)
     assert_equal nil, res
     
     url = nil
-    res = @keyword.http_get(url)
+    res = @splitter.http_get(url)
     assert_equal nil, res
   end
   
@@ -100,15 +130,18 @@ class WordSplitterTest < ActiveSupport::TestCase
     
     str = "ユナイテッド加入のフェライニ「夢だった」" 
     #str = "ManUtdalives"
-    res = @keyword.request_yahoo_keyp_api(str)    
+    res = @splitter.request_yahoo_keyp_api(str)    
     puts res
     
     str = "大物選手の移動が相次いだビッグサマー １３−１４シーズン夏の欧州移籍リスト"
-    res = @keyword.request_yahoo_keyp_api(str)    
+    res = @splitter.request_yahoo_keyp_api(str)    
     puts res
     
     str = "アーセナル、エジル獲得を発表"
-    res = @keyword.request_yahoo_keyp_api(str)    
+    res = @splitter.request_yahoo_keyp_api(str)    
     puts res
   end
+  
+=end
+  
 end

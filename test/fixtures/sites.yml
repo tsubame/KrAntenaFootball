@@ -8,15 +8,38 @@ site_1:
   name: サッカーキング
   url: http://www.soccer-king.jp/news
   feed_url: http://www.soccer-king.jp/RSS.rdf
-# column: value
 #
 site_2:
   name: Goal.com
   url: http://www.goal.com/jp/
   feed_url: http://www.goal.com/jp/feeds/news?fmt=rss&ICID=HP
-#  column: value
 
 site_3:
   name: スポーツナビ/サッカー
   url: http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/
   feed_url: http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/rss
+
+site_4:
+  name: 日刊スポーツ/サッカー
+  url: http://www.nikkansports.com/soccer/top-soccer.html
+  feed_url: http://www.nikkansports.com/soccer/index.xml
+  
+site_5:
+  name: 日刊スポーツ/海外サッカー
+  url: http://www.nikkansports.com/soccer/world/top-world.html
+  feed_url: http://www.nikkansports.com//soccer/world/index.xml
+  
+site_6:
+  name: ゲキサカ[講談社] » 海外サッカー
+  url: http://www.nikkansports.com/soccer/world/top-world.html
+  feed_url: http://web.gekisaka.jp/feed?cat=6%2C39
+  
+site_7:
+  name: ゲキサカ[講談社] » 日本代表
+  url: http://web.gekisaka.jp/category/news/nationalteam
+  feed_url: http://web.gekisaka.jp/feed?cat=4%2C43
+  
+site_8:
+  name: ゲキサカ[講談社] » 国内サッカー
+  url: http://web.gekisaka.jp/category/news/domestic
+  feed_url: http://web.gekisaka.jp/feed?cat=5%2C29

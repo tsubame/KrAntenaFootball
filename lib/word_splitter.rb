@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require 'MeCab'
 require 'kconv'
 
@@ -20,6 +21,36 @@ class WordSplitter
     word_str = wakati.parse(str)
     word_str = word_str.toutf8
     words = word_str.split(" ")
+    
+    return words
+  end  
+  
+  # 
+  # Mecabを使って文字列から名詞を取り出す
+  # 1文字の名詞は取り出さない
+  #
+  # @param  [String] str
+  # @return [Array] words
+  def pickup_noun(str)      
+    if str.kind_of?(String) == false
+      return []
+    end
+
+    wakati = MeCab::Tagger.new('-O wakati')
+    node = wakati.parseToNode(str)
+    words = []
+      
+    while node do
+      #puts "#{node.surface}\t#{node.feature}"
+      feature = node.feature.toutf8
+      word = node.surface.toutf8
+      
+      if feature =~ /名詞.*(一般|固有名詞)/ && 1 < word.length
+         words.push(word)
+      end
+      
+      node = node.next
+    end
     
     return words
   end  

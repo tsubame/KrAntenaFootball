@@ -30,16 +30,22 @@ class News < ActiveRecord::Base
     sites = Site.all
     sites.each do |site|
       rss = RSS::Parser.parse(site.feed_url, false)
-
+      
       rss.items.each do |item|
         news = News.new
         news.title   = item.title
         news.url     = item.link
         news.site_id = site.id
-        news_row.push(news)
+        news.published_at = item.date
+        # 24時間以内のニュースに絞る
+        date = item.date        
+        now = Time.now
+        if (now - date) < 86400 
+          news_row.push(news)
+        end
       end
     end
-    
+        
     return news_row
   end
   
