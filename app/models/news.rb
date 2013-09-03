@@ -1,3 +1,8 @@
+# coding: utf-8
+
+#
+#
+#
 class News < ActiveRecord::Base
   # attr_accessible :title, :body
   
@@ -32,6 +37,23 @@ class News < ActiveRecord::Base
       # RSSでデータを取得
     
     # newsテーブルに保存
+  end
+  
+  #
+  # 同じURLのデータが無ければDBに保存
+  # 
+  # @return [bool] 保存できればtrue
+  def save_if_not_exists
+    begin
+      save
+      p '保存に成功しました'
+    rescue => e
+      p '保存に失敗しました'
+      p e.message
+      return false
+    end
+    
+    return true 
   end
   
 end

@@ -7,6 +7,8 @@ gem 'rails', '3.2.13'
 
 gem 'sqlite3'
 
+gem 'rspec-rails', '>= 2.6.0', :group => [:development, :test]
+
 gem 'active_attr'
 
 
