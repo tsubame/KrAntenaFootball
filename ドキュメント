@@ -1,0 +1,61 @@
+【テーブル構成】
+
+sites
+	id
+	name
+	url
+	feed_url
+
+news
+	id
+	title
+	url
+	site_id
+
+keywords
+	id
+	name
+	重要度
+
+articles
+	id
+	title
+	url
+	site_id
+	
+	
+	
+	
+	
+【コントローラ / アクション】
+
+site
+	new
+	index
+	
+article
+	
+	
+news
+	get_todays_news
+		今日のニュースを取得してテーブルに保存する
+		（RSS使用）
+
+keyword
+	
+	
+
+	
+【サイトの初期データ】
+
+サッカーキング
+http://www.soccer-king.jp/news
+http://www.soccer-king.jp/RSS.rdf
+	
+Goal.com
+http://www.goal.com/jp/
+http://www.goal.com/jp/feeds/news?fmt=rss&ICID=HP
+
+スポーツナビ/サッカー
+http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/
+http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/rss

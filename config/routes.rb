@@ -1,4 +1,14 @@
 KrAntenaFootball::Application.routes.draw do
+  get "news/new"
+
+  get "news/index"
+
+  get "news/get_todays_post"
+
+  get "site/index"
+
+  get "site/new"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
