@@ -4,8 +4,19 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
+site_1:
+  name: サッカーキング
+  url: http://www.soccer-king.jp/news
+  feed_url: http://www.soccer-king.jp/RSS.rdf
 # column: value
 #
-two: {}
+site_2:
+  name: Goal.com
+  url: http://www.goal.com/jp/
+  feed_url: http://www.goal.com/jp/feeds/news?fmt=rss&ICID=HP
 #  column: value
+
+site_3:
+  name: スポーツナビ/サッカー
+  url: http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/
+  feed_url: http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/rss

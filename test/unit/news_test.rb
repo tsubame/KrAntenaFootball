@@ -7,16 +7,14 @@ class NewsTest < ActiveSupport::TestCase
   # end
   
   # 調べること。
-  # テスト用のDBはどうなる？
-  # fixtureの使い方
   # バリデーションは？
   
   def setup
-    #@news = News.new
+    @news = News.new
   end
   
   def teardown
-    #@news = nil
+    @news = nil
   end
   
   #
@@ -26,23 +24,48 @@ class NewsTest < ActiveSupport::TestCase
     
   end
   
+  # save_todays_newsのテスト
+  #
+  #
+  test "save_todays_newsで正常にニュースが保存できる" do
+    @news.save_todays_news    
+    data = News.all
+    data.each do |d|
+      #p d
+    end    
+    # 正常ならDBに3件以上データが有る
+    assert_not_equal data.size, 0    
+    assert_not_equal data.size, 1
+    assert_not_equal data.size, 2
+  end
+  
+  # get_todays_newsのテスト
+  #
+  #
+  test "get_todays_newsで正常にニュースが取得できる" do
+    data = @news.get_todays_news    
+    data.each do |d|
+      #p d
+    end
+    # 正常なら1件以上データが有る
+    assert_not_equal data.size, 0
+  end
+  
   # 
   # save_if_not_existsのテスト
   #
   #
   test "save_if_not_exists" do
-    # 同じURLのデータがなければ正常に保存できるか 返り値はtrue
+    # 同じURLのデータがなければ正常に保存できる 返り値はtrue
     news = News.new
     news.title    = 'ニュース｜サッカー｜スポーツナビ'
     news.url      = 'http://sportsnavi.yahoo.co.jp/sports/soccer/'
     news.site_id  = 0 
+    
     res = news.save_if_not_exists()
     assert_equal res, true
     
-    data = News.all
-    #p data
-    
-    # 同じURLのデータがあれば保存できないか 返り値はfalse    
+    # 同じURLのデータがあれば保存できない 返り値はfalse    
     news = News.new
     news.title    = 'test'
     news.url      = 'http://sportsnavi.yahoo.co.jp/sports/soccer/'
@@ -51,8 +74,5 @@ class NewsTest < ActiveSupport::TestCase
     
     res = news.save_if_not_exists()
     assert_equal res, false
-    
-    data = News.all
-    #p data
   end
 end
