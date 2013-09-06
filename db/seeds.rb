@@ -11,17 +11,23 @@
 Site.create(
   :name => "サッカーキング",
   :url => "http://www.soccer-king.jp/news",
-  :feed_url => "http://www.soccer-king.jp/RSS.rdf"
+  :feed_url => "http://www.soccer-king.jp/RSS.rdf",
+  :category_id => 0,
+  :rank => nil
 )
 
 Site.create(
   :name => "Goal.com",
   :url => "http://www.goal.com/jp/",
-  :feed_url => "http://www.goal.com/jp/feeds/news?fmt=rss&ICID=HP"
+  :feed_url => "http://www.goal.com/jp/feeds/news?fmt=rss&ICID=HP",
+  :category_id => 0,
+  :rank => nil
 )
 
 Site.create(
   :name => "スポーツナビ/サッカー",
   :url => "http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/",
-  :feed_url => "http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/rss"
+  :feed_url => "http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/rss",
+  :category_id => 0,
+  :rank => nil
 )

@@ -29,17 +29,12 @@ site_5:
   url: http://www.nikkansports.com/soccer/world/top-world.html
   feed_url: http://www.nikkansports.com//soccer/world/index.xml
   
-site_6:
-  name: ゲキサカ[講談社] » 海外サッカー
-  url: http://www.nikkansports.com/soccer/world/top-world.html
-  feed_url: http://web.gekisaka.jp/feed?cat=6%2C39
-  
-site_7:
-  name: ゲキサカ[講談社] » 日本代表
-  url: http://web.gekisaka.jp/category/news/nationalteam
-  feed_url: http://web.gekisaka.jp/feed?cat=4%2C43
-  
 site_8:
-  name: ゲキサカ[講談社] » 国内サッカー
-  url: http://web.gekisaka.jp/category/news/domestic
-  feed_url: http://web.gekisaka.jp/feed?cat=5%2C29
+  name: カルチョまとめ
+  url: http://www.calciomatome.net/
+  feed_url: http://www.calciomatome.net/index.rdf
+  
+site_9:
+  name: ドメサカ板まとめ
+  url: http://blog.livedoor.jp/domesoccer/
+  feed_url: http://blog.livedoor.jp/domesoccer/index.rdf

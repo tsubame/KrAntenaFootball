@@ -60,6 +60,28 @@ http://www.goal.com/jp/feeds/news?fmt=rss&ICID=HP
 http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/
 http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/rss
 
+スポーツナビ＋
+↑のいくつか
+
 
 【用語一覧】
+
+
+
+【要実装】
+
+・サイト一覧（管理者向け）のページ　（どう実装する？）
+・RSSでサイトの記事取得（マルチスレッド。実行時間も調べる）
+・Facebookで(・∀・)ｲｲﾈ!!数取得
+・TwitterでRTカウント取得（マルチスレッド。リクエスト件数は抑える。実行時間も調べる）
+・articlesテーブルにカラム追加
+	fb_share
+	tw_retweet
+
+
+
+【....φ(・ω・｀ )ﾒﾓﾒﾓ】
+
+・バリデーションはどう使う？
+
 

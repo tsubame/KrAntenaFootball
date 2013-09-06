@@ -13,10 +13,24 @@
 
 ActiveRecord::Schema.define(:version => 20130901144608) do
 
+  #
+  # 0 ニュースサイト
+  # 1 2chまとめ
+  # 2 海外の反応
+  # 3 その他のブログ
+  #
+  create_table "category", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+  
   create_table "articles", :force => true do |t|
     t.string   "title"
     t.string   "url"
     t.integer  "site_id"
+    t.integer  "category_id"
+    t.datetime "published_at"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -37,14 +51,18 @@ ActiveRecord::Schema.define(:version => 20130901144608) do
     t.datetime "updated_at", :null => false
   end
 
-  add_index "news", ["url"], :name => "unique_url", :unique => true
+  add_index "news", ["url"], :name => "news_unique_url", :unique => true
 
   create_table "sites", :force => true do |t|
     t.string   "name"
     t.string   "url"
     t.string   "feed_url"
+    t.integer  "category_id", :default => 3
+    t.string   "registered_from"
+    t.integer  "rank"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
+  
+  add_index "sites", ["url"], :name => "sites_unique_url", :unique => true
 end

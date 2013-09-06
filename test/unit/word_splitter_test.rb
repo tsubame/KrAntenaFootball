@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 require 'test_helper'
-require 'word_splitter'
+require 'assets/word_splitter'
 
 class WordSplitterTest < ActiveSupport::TestCase
   
