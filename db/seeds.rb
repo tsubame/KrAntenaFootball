@@ -31,3 +31,61 @@ Site.create(
   :category_id => 0,
   :rank => nil
 )
+
+Site.create(
+  :name => "スポーツナビ＋ サッカー日本代表",
+  :url => "http://www.plus-blog.sportsnavi.com/centric/soccer_japan",
+  :feed_url => "http://www.plus-blog.sportsnavi.com/feed/centric/soccer_japan/rss2_0.xml",
+  :category_id => 3
+)
+
+Site.create(
+  :name => "スポーツナビ＋ Jリーグ",
+  :url => "http://www.plus-blog.sportsnavi.com/centric/jleague",
+  :feed_url => "http://www.plus-blog.sportsnavi.com/feed/centric/jleague/rss2_0.xml",
+  :category_id => 3
+)
+
+Site.create(
+  :name => "スポーツナビ＋ サッカーワールドカップ",
+  :url => "http://www.plus-blog.sportsnavi.com/centric/soccer_wcup",
+  :feed_url => "http://www.plus-blog.sportsnavi.com/feed/centric/soccer_wcup/rss2_0.xml",
+  :category_id => 3
+)
+
+Site.create(
+  :name => "スポーツナビ＋ 欧州サッカー",
+  :url => "http://www.plus-blog.sportsnavi.com/centric/eusoccer",
+  :feed_url => "http://www.plus-blog.sportsnavi.com/feed/centric/eusoccer/rss2_0.xml",
+  :category_id => 3
+)
+
+
+=begin
+Site.create(
+  :name => "スポーツナビ＋ ",
+  :url => "",
+  :feed_url => "",
+  :category_id => 3
+)
+=end
+
+Category.create(
+  :id => 0,
+  :name => "ニュース"
+)
+
+Category.create(
+  :id => 1,
+  :name => "2chまとめ"
+)
+
+Category.create(
+  :id => 2,
+  :name => "海外の反応"
+)
+
+Category.create(
+  :id => 3,
+  :name => "その他のブログ"
+)

@@ -9,6 +9,14 @@ KrAntenaFootball::Application.routes.draw do
 
   get "site/new"
 
+  get "site/update"
+  put "site/update"
+  post "site/update"
+    
+  get "site/index_for_admin"
+  
+  get "site/create_from_rank"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,0 +1,19 @@
+<h1>Site#index</h1>
+
+<table>
+<% @sites.each do |site| %>
+<% #フォームを追加 %>
+	<tr name = "tr_<%= site.id %>">
+	<%= form_for(site, :url => {:action => "update"} ) do |f| %>
+		<%= f.hidden_field(:id) %>
+		<td>
+			<%= f.text_field :name %>
+			<%= f.collection_select(:category_id, Category.all, :id, :name) %>
+			<input type = "button" class = "submit" value = "Ajax更新" id = "<%= site.id %>" />
+		</td>
+		<td><%= f.submit "更新" %></td>
+		<td></td>
+	<% end %>
+	</tr>
+<% end %>
+</table>
