@@ -16,8 +16,9 @@ ActiveRecord::Schema.define(:version => 20130901144608) do
   create_table "articles", :force => true do |t|
     t.string   "title"
     t.string   "url"
-    t.integer  "site_id"
-    t.integer  "category_id"
+    t.references :site
+    t.integer  "tw_retweet",   :default => 0
+    t.integer  "fb_share",     :default => 0
     t.datetime "published_at"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false

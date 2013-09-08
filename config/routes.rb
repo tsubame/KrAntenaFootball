@@ -1,22 +1,22 @@
 KrAntenaFootball::Application.routes.draw do
-  get "news/new"
 
-  get "news/index"
+# 要リファクタリング  
+  get  "news/index"
+  get  "news/get_todays_post"
 
-  get "news/get_todays_post"
-
-  get "site/index"
-
-  get "site/new"
-
-  get "site/update"
-  put "site/update"
-  post "site/update"
-    
-  get "site/index_for_admin"
+  get  "site/index"
+  get  "site/new"
+  get  "site/update"
+  put  "site/update"
+  post "site/update"    
+  get  "site/index_for_admin"
+  get  "site/create_from_rank"
   
-  get "site/create_from_rank"
+  get  "article/index"
+  get  "article/create_from_rss"
+  get  "article/update_share_count"
   
+      
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,3 +1,40 @@
+【ユースケース】
+
+ケース /　ブログ記事を表示する
+シナリオ /　SNSで多くシェアされているサッカー関連のブログ記事を表示する
+
+　◎必要な機能
+
+  [ブログサイトを登録]
+　　ライブドア、FC2のサッカーカテゴリの人気ブログをDBに登録する
+  
+  [RSSでブログ記事を取得]
+　　登録済みのサイトからRSSを取得し、ブログ記事をDBに登録する
+	  ArticleController#create_from_rss
+
+  [SNSのシェア数を取得して更新]
+   Facebookのシェア数、TwitterのRT数を取得し、DBの記事データ更新
+   負荷を下げるため、100件程度に絞る
+   
+	  ArticleController#update_share_count
+	  ↓
+	  Model::ArticleUpdateShareCountAction#exec
+  	  ↓
+  	  lib::assets::SocialShareCountGetter#get_tw_rt_count_of_url
+  	  lib::assets::SocialShareCountGetter#get_fb_share_count_of_url
+  	  
+  
+  [記事の表示]
+   
+      ArticleController#index
+      ↓
+      Model::Article#select_todays_pop_articles
+
+
+
+
+
+
 【テーブル構成】
 
 sites
@@ -81,6 +118,7 @@ http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/rss
 ・articlesテーブルにカラム追加
 	fb_share
 	tw_retweet
+	
 ・twitter_bootstrapを使用
 
 

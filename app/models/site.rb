@@ -19,4 +19,6 @@ class Site < ActiveRecord::Base
     return true 
   end
   
+
+  
 end

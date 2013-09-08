@@ -73,7 +73,7 @@ class WordSplitter
   # @return [String] json
   def request_yahoo_keyp_api(str)
     encode_str = CGI.escape(str)
-    url = KEYP_REQUEST_URL + encode_str    
+    url  = KEYP_REQUEST_URL + encode_str    
     json = http_get(url)
     
     return json

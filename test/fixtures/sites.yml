@@ -5,11 +5,14 @@
 # below each fixture, per the syntax in the comments below
 #
 site_1:
+  id: 1
   name: サッカーキング
   url: http://www.soccer-king.jp/news
   feed_url: http://www.soccer-king.jp/RSS.rdf
+  category_id: 0
 #
 site_2:
+  id: 2
   name: Goal.com
   url: http://www.goal.com/jp/
   feed_url: http://www.goal.com/jp/feeds/news?fmt=rss&ICID=HP
@@ -30,9 +33,11 @@ site_5:
   feed_url: http://www.nikkansports.com//soccer/world/index.xml
   
 site_8:
+  id: 3
   name: カルチョまとめ
   url: http://www.calciomatome.net/
   feed_url: http://www.calciomatome.net/index.rdf
+  category_id: 1
   
 site_9:
   name: ドメサカ板まとめ

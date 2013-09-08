@@ -2,11 +2,10 @@
 require 'open-uri'
 require 'rss'
 
+# sitesテーブル内のサイトのRSSからブログ記事を取得し、articlesテーブルに保存する。
 #
 #
-#
-#
-class ArticleCreateFromRankAction
+class ArticleCreateFromRssAction
   attr_reader :error_message, :articles
   attr_accessor :max_thread
   
@@ -29,81 +28,73 @@ class ArticleCreateFromRankAction
   #
   #
   def exec
-    # サイトを取得
-    sites = Site.all
-    feed_urls = []
-    # サイトの件数ループ    
-    sites.each do |site|
-      feed_urls << site.feed_url
-    end
-    
-    get_articles_by_multi_threads_limited(feed_urls)
+    sites = Site.all    
+    get_articles_parallel_limited(sites)
     
     @articles.each do |article|
       article.save_if_not_exists
     end
   end
   
-  # スレッドを使ってRSSから記事を取得する
-  # スレッドの最大数は定数に従う
-  # エラー時にはfalseを返す
+  # スレッド数の上限を指定して複数のサイトのRSS記事を取得
+  # スレッドの最大数は@max_thread
   #
-  # @param [Array] feed_urls
-  # @return [Array] articles
-  def get_articles_by_multi_threads_limited(feed_urls)
-    req_urls = []
- 
+  # @param  [Array] sites Siteの配列
+  def get_articles_parallel_limited(sites)
     req_count = 1
-    feed_urls.each_with_index  do |url, i|
-      req_urls << url
-      if @max_thread <= req_urls.size || i == feed_urls.size - 1
+    sites_que = []
+      
+    sites.each_with_index do |site, i|
+      sites_que << site
+      if @max_thread <= sites_que.size || sites.size - 1 <= i
         puts "#{req_count}回目のアクセス"
         req_count += 1
-        get_articles_by_multi_threads(req_urls)
-        req_urls = []
+        get_articles_parallel(sites_que)
+        sites_que = []
       end
     end
- 
-    return @articles
   end
   
-  # スレッドを使ってRSSから記事を取得する
-  # エラー時にはfalseを返す
+  # スレッドを使って複数のサイトのRSS記事を取得
   #
-  # @param [Array] feed_urls
-  # @return [Array] articles
-  def get_articles_by_multi_threads(feed_urls)
+  # @param  [Array] sites Siteの配列
+  def get_articles_parallel(sites)
     ths = []
-    feed_urls.each do |feed_url|
-      ths << Thread.start(feed_url) do |url|
-        get_articles_to_array(url)
+    sites.each do |site|
+      ths << Thread.start(site) do |s|
+        get_articles_from_site(s)
       end
     end
     
     ths.each do |th|
       th.join      
     end
-
-    return @articles
   end
   
-  # get_articles_from_rssの結果を@articlesに格納
+  # 単一サイトのRSSを読み込んで記事を取得し、@articlesに格納
   #
-  # @param [String] feed_url
-  # @return [Array] articles
-  def get_articles_to_array(feed_url)
-    articles = get_articles_from_rss(feed_url)
-    #p articles
-    @articles += articles
+  # @param  [Site]  site
+  def get_articles_from_site(site)
+    rss = get_articles_from_rss(site.feed_url)
     
-    return @articles
+    #articles = []
+    rss.items.each_with_index  do |item, i|
+      article = Article.new
+      article.title   = item.title
+      article.url     = item.link
+      article.site_id = site.id
+      article.published_at = item.date
+      @articles.push(article)
+    end
+    
+    #@articles += articles
   end
   
-  # RSSから記事を取得する
+  # 単一サイトのRSSを読み込む
   # エラー時にはfalseを返す
   #
-  # @param [String] feed_url
-  # @return [Array] articles
+  # @param  [String] feed_url
+  # @return [RSS] rss
   def get_articles_from_rss(feed_url)
     begin
       rss = RSS::Parser.parse(feed_url, false)
@@ -112,15 +103,7 @@ class ArticleCreateFromRankAction
       return false 
     end
     
-    articles = []
-    rss.items.each_with_index  do |item, i|
-      article = Article.new
-      article.title = item.title
-      article.url   = item.link
-      articles.push(article)
-    end
-    
-    return articles
+    return rss
   end
   
 end

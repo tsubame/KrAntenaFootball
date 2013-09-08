@@ -10,8 +10,10 @@ gem 'sqlite3'
 gem 'rspec-rails', '>= 2.6.0', :group => [:development, :test]
 
 gem 'active_attr'
-
-
+# Facebook用のライブラリ
+gem 'fql'
+# 並列処理用のライブラリ
+gem 'parallel'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -24,6 +26,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+# jquery
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
