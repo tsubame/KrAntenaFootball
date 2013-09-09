@@ -77,17 +77,14 @@ class ArticleCreateFromRssAction
   def get_articles_from_site(site)
     rss = get_articles_from_rss(site.feed_url)
     
-    #articles = []
     rss.items.each_with_index  do |item, i|
       article = Article.new
-      article.title   = item.title
-      article.url     = item.link
-      article.site_id = site.id
-      article.published_at = item.date
+      article.title     = item.title 
+      article.url       = item.link
+      article.site_id   = site.id
+      article.published = item.date
       @articles.push(article)
     end
-    
-    #@articles += articles
   end
   
   # 単一サイトのRSSを読み込む

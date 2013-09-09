@@ -2,97 +2,80 @@
 require 'test_helper'
 
 class ArticleTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
   
+  # テストの前の処理 
+  # データの登録
+  #
   def setup
     @article = Article.new
+
+    # データの登録 今日、昨日のデータを合計50件登録
+    50.times do |i|
+      article = Article.new
+      article.url = "http://data_#{i}"
+      article.site_id = 1 #fixtures/sites.ymlのid:1のデータ
+      article.published_at = Time.now - (3600 * i)
+      article.save_if_not_exists
+    end
   end
   
   def teardown
     @article = nil
   end
   
-  # select_todays_pop_articles
-  # 前提条件
-  # テーブル内に今日のデータが10件登録されている
+  # select_recent_data
+  # 前提条件: articlesテーブルにデータが登録されている
   #
-  test "select_todays_pop_articles データが取得できる" do
+  test "select_recent_data 24時間内のデータ、48時間内のデータが取得できる" do
+    articles = @article.select_recent_data(24)
+    assert_not_equal articles.size, 0
+    articles = @article.select_recent_data(48)
+    assert_not_equal articles.size, 0
+  end  
+  
+  # select_recent_data_limited
+  # 前提条件: articlesテーブルに24時間内のデータが2件以上登録されている
+  #
+  test "select_recent_data_limited 24時間内のデータが1件、続いて2件取得できる" do
+    articles = @article.select_recent_data_limited(24, 1)
+    assert_equal articles.size, 1
+    articles = @article.select_recent_data_limited(24, 2)
+    assert_equal articles.size, 2
+  end  
+  
+  # select_todays_pop_articles
+  # 前提条件： articlesテーブルに、sites_id:1 かつ 24時間内のデータが10件以上登録されている
+  #
+  test "select_todays_pop_articles 指定したカテゴリIDのデータが10件取得できる" do
     expected_category_id = 0
     count = 10
     
-    10.times do |i|
-      article = Article.new
-      article.url = "http://#{i}"
-      article.site_id = 1
-      article.published_at = Time.now - (3600 * 20)
-      article.tw_retweet = rand(100)
-      article.fb_share = rand(100)
-      article.save_if_not_exists
-    end
-    
     articles = @article.select_todays_pop_articles(expected_category_id, count)
-    assert_equal count, articles.size
-    
+    assert_equal count, articles.size    
     articles.each do |article|
-      p article
       assert_equal expected_category_id, article.site.category_id
     end
   end
   
-  # 関連するモデルを取得する
+  # find 
+  # 関連するモデルを取得できる
   #
   test "find 関連するモデルを取得する" do
     article = Article.find(1)
-    #p article.site
     assert_equal article.site.name, "サッカーキング"
   end  
   
-  # 前提条件
-  # テーブル内にデータが200件登録されている
+  # 前提条件：テーブル内にデータが200件登録されている
   #
   test "select_recent_data_limited 指定した日時、件数のデータが取得できる" do
     hour = 24
     count = 10
-    save_articles = []
-    200.times do |i|
-      article = Article.new
-      article.url = "http://#{i}"
-      article.published_at = Time.now - (3600 * rand(50))
-      article.save_if_not_exists
-    end
-    
-    articles = @article.select_recent_data_limited(hour, count)
-    #puts articles.size  
-    
+
+    articles = @article.select_recent_data_limited(hour, count)    
     articles.each do |article|
       assert article.published_at > Time.now - (3600 * hour)
     end
     assert_equal articles.size, count
   end  
   
-  # 前提条件
-  #
-  test "select_recent_data_limited 指定した件数のデータが取得できる" do
-    articles = @article.select_recent_data_limited(28, 1)
-    assert_equal articles.size, 1
-    articles = @article.select_recent_data_limited(28, 2)
-    assert_equal articles.size, 2
-  end  
-  
-  # 前提条件
-  # テーブル内にデータが200件登録されている
-  #
-  test "select_recent_data 指定した日時以降のデータが取得できる" do
-    articles = @article.select_recent_data(24)
-    #puts articles.size  
-    #p articles
-    assert_not_equal articles.size, 0
-    
-    articles = @article.select_recent_data(26)
-    #puts articles.size  
-    #p articles
-    assert_not_equal articles.size, 0
-  end  
 end

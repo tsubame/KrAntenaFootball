@@ -17,9 +17,11 @@ ActiveRecord::Schema.define(:version => 20130901144608) do
     t.string   "title"
     t.string   "url"
     t.references :site
-    t.integer  "tw_retweet",   :default => 0
-    t.integer  "fb_share",     :default => 0
-    t.datetime "published_at"
+    #t.integer  "tw_retweet",   :default => 0
+    #t.integer  "fb_share",     :default => 0
+    t.integer  "tw_count",     :default => 0
+    t.integer  "fb_count",     :default => 0    
+    t.datetime "published"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
@@ -54,7 +56,8 @@ ActiveRecord::Schema.define(:version => 20130901144608) do
     t.string   "name"
     t.string   "url"
     t.string   "feed_url"
-    t.integer  "category_id",     :default => 3
+    #t.integer  "category_id",     :default => 3
+    t.references :category, :default => 3
     t.string   "registered_from"
     t.integer  "rank"
     t.datetime "created_at",                     :null => false

@@ -15,7 +15,7 @@ KrAntenaFootball::Application.routes.draw do
   get  "article/index"
   get  "article/create_from_rss"
   get  "article/update_share_count"
-  
+  get  "article/update_sns_count"  
       
   # The priority is based upon order of creation:
   # first created -> highest priority.

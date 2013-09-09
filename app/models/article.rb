@@ -5,7 +5,7 @@ class Article < ActiveRecord::Base
   belongs_to :site
   
   # 今日の人気記事を取得
-  # fb_share ＋ tw_retweet の合計順に取得
+  # fb_count ＋ tw_count の合計順に取得
   #
   # @param [integer] category_id
   # @param [integer] count
@@ -13,8 +13,8 @@ class Article < ActiveRecord::Base
     now = Time.now
     date = now - (3600 * 24)
     articles = Article.joins(:site).
-      where("sites.category_id = ? AND articles.published_at > ?", category_id, date).
-      order('articles.fb_share + articles.tw_retweet desc').limit(count)
+      where("sites.category_id = ? AND articles.published > ?", category_id, date).
+      order('articles.fb_count + articles.tw_count desc').limit(count)
   end
   
   # 同じURLのデータが無ければDBに保存
@@ -39,7 +39,7 @@ class Article < ActiveRecord::Base
   def select_recent_data_limited(hour, count)
     now = Time.now
     date = now - (3600 * hour)
-    articles = Article.where("published_at > ?", date).order('published_at').limit(count).offset(0)
+    articles = Article.where("published > ?", date).order('published').limit(count).offset(0)
   end
   
   # 件数、時間（最近◯時間内のデータ）を指定してデータを取得
@@ -50,7 +50,7 @@ class Article < ActiveRecord::Base
   def select_recent_data(hour)
     now = Time.now
     date = now - (3600 * hour)
-    articles = Article.where("published_at > ?", date).order('published_at')
+    articles = Article.where("published > ?", date).order('published')
   end
   
 end 

@@ -11,11 +11,11 @@
 		<div class = "tab-pane <% if i == 0 then %>active<% end %>" id = "tab_<%= i %>">
 			<% articles.each do |article| %>
 			<div class = "article">
-				<a href = "<%= article.url %>" target = "_blank"><%= article.title %></a><br />
-				　　<%= article.site.name %>　
-				<%= article.published_at %>　
-				<%= article.tw_retweet %> RT　
-				<%= article.fb_share %> share　
+				<a href = "<%= article.url %>" target = "_blank"><%= article.title %></a><br />				　　
+				　　<%= article.tw_count %> RT　
+				<%= article.fb_count %> share　
+				<%= article.site.name %>　
+				<%= article.published %>　
 			</div>
 			<% end %>
 		</div>

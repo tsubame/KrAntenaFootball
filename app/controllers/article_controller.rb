@@ -36,5 +36,14 @@ class ArticleController < ApplicationController
     index
     render "index"
   end
-  
+
+  # SNSのシェア数更新
+  #
+  def update_sns_count
+    action = ArticleUpdateSnsCountAction.new
+    action.exec
+    index
+    render "index"
+  end
+    
 end
