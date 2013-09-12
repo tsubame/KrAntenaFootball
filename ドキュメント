@@ -81,48 +81,78 @@ news
 keyword
 	
 	
-
 	
-【サイトの初期データ】
+【テーブル】
 
-サッカーキング
-http://www.soccer-king.jp/news
-http://www.soccer-king.jp/RSS.rdf
+categories
+	id		
+	name	政治、経済　サッカー　野球
 	
-Goal.com
-http://www.goal.com/jp/
-http://www.goal.com/jp/feeds/news?fmt=rss&ICID=HP
+sub_categories	
+	id		
+	name	2chまとめ、ブログ（その他）、ニュース
 
-スポーツナビ/サッカー
-http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/
-http://sportsnavi.yahoo.co.jp/sports/soccer/headlines/rss
+blog_rank_pages
+	id
+	category_id
+	sub_category_id
+	url
+	blog_service_name
+	max_register_count
 
-スポーツナビ＋
-↑のいくつか
+sites
+	id
+	title　※nameから変更
+	url
+	feed_url
+	category_id
+	sub_category_id
+	blog_service_name
+
+articles
+	id
+	title
+	url
+	site_id
+	rt_count
+	fb_count
+	published
+	disabled
+	
+	
+
 
 
 【用語一覧】
 
 
 
+【最終目標 / 優先度順】
+・動くページを公開する
+・GitHubにソースを公開
+・ドキュメントを作っておく
+　　仕様書、設計書
+
 【要実装】
 
-・スポーツナビ＋のいくつかのデータを初期データとして登録
-・サイト一覧（管理者向け）のページ　（どう実装する？）
-	・要認証
-	・JSも実装
-・メニューバー実装	
-・RSSでサイトの記事取得（マルチスレッド。実行時間も調べる）
-・Facebookで(・∀・)ｲｲﾈ!!数取得
-・TwitterでRTカウント取得（マルチスレッド。リクエスト件数は抑える。実行時間も調べる）
-・articlesテーブルにカラム追加
-	fb_share
-	tw_retweet
-	
+・テーブル編成　再考
+・サイトのモックアップを作る
+・政治、経済ブログも見れるように
+・記事のプレビューを見たい
+・ツイッターの反応も見たい
+・アメブロ、gooブログの登録
+・認証	
 ・twitter_bootstrapを使用
+・UIデザイン
+・テストをRSpecで
+・リファクタリング
+・サーバにアップロードして、cronで運用
+・メソッドをドキュメント化
 
 
 【....φ(・ω・｀ )ﾒﾓﾒﾓ】
+
+・クラス一覧必要だなあ・・・
 
 ・バリデーションはどう使う？
 ・テストをまとめる方法は？

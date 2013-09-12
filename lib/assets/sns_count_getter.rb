@@ -70,14 +70,10 @@ class SnsCountGetter
   # @param  [Array] urls
   def get_sns_counts_parallel(urls)
     ths = []
-    #urls.each do |th_url|
-      #ths << Thread.start(th_url) do |url|
     urls.each do |url|
       ths << Thread.start do 
         fb_count = get_fb_count(url)
         tw_count = get_tw_count(url)
-        #@fb_counts_hash[url] = fb_count
-        #@tw_counts_hash[url] = tw_count              
         @results[url] = {}  
         @results[url][:fb_count] = fb_count
         @results[url][:tw_count] = tw_count
@@ -129,6 +125,10 @@ class SnsCountGetter
       escaped_url = CGI.escape(url)
       query = %|SELECT total_count FROM link_stat WHERE url="#{escaped_url}"|
       response = Fql.execute(query)
+#p response
+      if response.size == 0 then
+        return false
+      end         
       count = response[0]["total_count"]        
     rescue => e
       @error_message += e.message
@@ -186,39 +186,6 @@ class SnsCountGetter
     ths.each do |th|
       th.join      
     end
-  end
-  
-  
-  
-  
-  
-  # 並列処理でTwitterのRT数を取得
-  #
-  # @param  [Array] urls
-  # @return [Array] counts 
-  def get_tw_count_parallel_pre(urls)  
-    results = Parallel.map(urls, :in_threads => @max_thread) do |url|
-      count = get_tw_count(url)      
-      @tw_counts_hash[url] = count
-      count
-    end
-    
-    return results
-  end
-  
-# エラーが出るため変更  
-  # 並列処理でFbのトータルカウントを取得
-  #
-  # @param  [Array] urls
-  # @return [Array] counts 
-  def get_fb_count_parallel_pre(urls)
-    results = Parallel.map(urls, :in_threads => @max_thread) do |url|
-      count = get_fb_count(url)      
-      @fb_counts_hash[url] = count      
-      count
-    end
-    
-    return results
   end
   
 end
