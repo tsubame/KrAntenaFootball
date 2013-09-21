@@ -21,7 +21,7 @@ class Comment < ActiveRecord::Base
   #
   def select_by_entry_id(entry_id, count = 30)
     comments = Comment.where("entry_id" => entry_id).
-      order('published asc').limit(count)
+      order('published desc').limit(count)
   end
   
 end

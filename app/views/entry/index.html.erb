@@ -16,10 +16,15 @@
 				<%= entry.fb_count %> share　
 				<%= entry.site.title %>　
 				<%= entry.published %>
+				<input type = "button" value = "コメント表示" class = "comment_button" name = "<%= entry.id %>" id = "comment_button_<%= entry.id %>"/>
 				<div class = "comment" id = "comment_<%= entry.id %>">
+
 				<% @comments_of_entries[entry.id].each do |comment|%>
-					<br /><br /><%= comment.user_account %>
+					<br /><br />
+					<img src = "<%= comment.icon_url %>" />
+					<%= comment.user_account %>	 <%= comment.published %>　
 					<br /><%= comment.text %>　
+					
 				<% end %><br /><br />
 				</div>
 			</div>

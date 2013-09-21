@@ -86,6 +86,8 @@ ActiveRecord::Schema.define(:version => 20130901144608) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+  
+  add_index "comments", ["url"], :name => "comments_unique_url", :unique => true
     
   # ブログランキングのページ（サイト登録用）
   create_table "blog_rank_pages", :force => true do |t|

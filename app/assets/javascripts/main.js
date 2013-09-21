@@ -12,6 +12,15 @@ $(function(){
 		// 更新
 		updateSite(id);
 	});
+	
+	$("input.comment_button").click(function() {
+	  	// エントリidを取得
+		var id = $(this).attr("name");
+		// 更新
+		//updateSite(id);
+		$("#comment_" + id).show();
+	});
+	
 });
 
 /**

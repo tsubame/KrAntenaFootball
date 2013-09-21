@@ -23,5 +23,10 @@ div#main {
 
 div.article {
 	margin: 20px 0;
-	padding-left: 20px;
+	padding: 10px;
+}
+
+div.comment {
+	margin: 10px 0;
+	display: none;
 }
