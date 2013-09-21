@@ -14,6 +14,9 @@ gem 'active_attr'
 gem 'fql'
 # 並列処理用のライブラリ
 gem 'parallel'
+# 
+gem 'twitter'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -28,6 +31,9 @@ end
 
 # jquery
 gem 'jquery-rails'
+
+# nokogiri
+gem 'nokogiri'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

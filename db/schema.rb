@@ -13,34 +13,102 @@
 
 ActiveRecord::Schema.define(:version => 20130901144608) do
 
+  # カテゴリー 
+  create_table "categories", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+  
+  # サブカテゴリー
+  create_table "sub_categories", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+    
+  # サイト
+  create_table "sites", :force => true do |t|
+    t.string     "title",       :null => false
+    t.string     "url",         :null => false
+    t.string     "feed_url",    :null => true
+    t.references :category,     :default => 1
+    t.references :sub_category, :default => 0
+    t.string     "registered_from"
+    t.integer    "rank"
+    t.datetime   "created_at",  :null => false
+    t.datetime   "updated_at",  :null => false
+  end
+
+  add_index "sites", ["url"], :name => "sites_unique_url", :unique => true
+
+  # 記事（ブログ記事、ニュース記事）
   create_table "articles", :force => true do |t|
-    t.string   "title"
-    t.string   "url"
-    t.references :site
-    #t.integer  "tw_retweet",   :default => 0
-    #t.integer  "fb_share",     :default => 0
+    t.string   "title",        :null => false
+    t.string   "url",          :null => false
+    t.references :site,        :null => false
     t.integer  "tw_count",     :default => 0
     t.integer  "fb_count",     :default => 0    
-    t.datetime "published"
+    t.datetime "published",    :null => false
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
 
   add_index "articles", ["url"], :name => "articles_unique_url", :unique => true
-
-  create_table "categories", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    
+  # エントリー（ブログ記事、ニュース記事など）
+  create_table "entries", :force => true do |t|
+    t.string   "title",        :null => false
+    t.string   "url",          :null => false
+    t.references :site,        :null => false
+    t.references :category,    :default => 0
+    t.string   "description",  :null => true
+    t.integer  "tw_count",     :default => 0
+    t.integer  "fb_count",     :default => 0    
+    t.integer  "ht_count",     :default => 0    
+    t.datetime "published",    :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
+  add_index "entries", ["url"], :name => "entries_unique_url", :unique => true
+  
+  # エントリーに対するSNSでのコメント（Twitter、Facebook）
+  create_table "comments", :force => true do |t|
+    t.string   "text",          :null => false
+    t.string   "url",           :null => true
+    t.string   "user_name",     :null => true
+    t.string   "user_account",  :null => true
+    t.string   "icon_url",      :null => true
+    t.string   "sns_name",      :default => "twitter"
+    t.references :entry,        :null => false
+    t.datetime "published",     :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+    
+  # ブログランキングのページ（サイト登録用）
+  create_table "blog_rank_pages", :force => true do |t|
+    t.string     "title",        :null => false
+    t.string     "url",          :null => false
+    t.string     "feed_url"  
+    t.references :category
+    t.references :sub_category
+    t.string     "blog_service_name"
+    t.integer    "max_register_count", :default => 25  
+    t.datetime   "created_at",         :null => false
+    t.datetime   "updated_at",         :null => false
+  end
+  
+      
+  # 以下、削除候補  
   create_table "keywords", :force => true do |t|
     t.string   "name"
     t.integer  "dupli_count"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
-
+  
   create_table "news", :force => true do |t|
     t.string   "title"
     t.string   "url"
@@ -51,19 +119,5 @@ ActiveRecord::Schema.define(:version => 20130901144608) do
   end
 
   add_index "news", ["url"], :name => "news_unique_url", :unique => true
-
-  create_table "sites", :force => true do |t|
-    t.string   "name"
-    t.string   "url"
-    t.string   "feed_url"
-    #t.integer  "category_id",     :default => 3
-    t.references :category, :default => 3
-    t.string   "registered_from"
-    t.integer  "rank"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-  end
-
-  add_index "sites", ["url"], :name => "sites_unique_url", :unique => true
-
+    
 end

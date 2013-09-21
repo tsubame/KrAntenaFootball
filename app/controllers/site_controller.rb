@@ -33,9 +33,14 @@ class SiteController < ApplicationController
   
   # ランキングサイトからブログを登録
   #
-  def create_from_rank
-    action = SiteCreateFromRankAction.new
-    action.exec
+  def create_auto
+    cat_id = nil
+    if params[:id]
+      p cat_id =  params[:id].to_i
+    end
+    
+    action = SiteCreateAutoAction.new
+    action.exec(cat_id)
     render "index"
   end
   

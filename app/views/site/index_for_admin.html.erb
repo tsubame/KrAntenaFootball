@@ -7,8 +7,9 @@
 	<%= form_for(site, :url => {:action => "update"} ) do |f| %>
 		<%= f.hidden_field(:id) %>
 		<td>
-			<%= f.text_field :name %>
+			<%= f.text_field :title %>
 			<%= f.collection_select(:category_id, Category.all, :id, :name) %>
+			<%= f.collection_select(:sub_category_id, SubCategory.all, :id, :name) %>
 			<input type = "button" class = "submit" value = "Ajax更新" id = "<%= site.id %>" />
 		</td>
 		<td><%= f.submit "更新" %></td>

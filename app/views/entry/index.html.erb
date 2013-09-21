@@ -1,0 +1,30 @@
+<div class = "tabbable" id = "main">
+	<ul class = "nav nav-tabs">
+		<% @categories.each_with_index do |category, i| %>
+		<li <% if i == 0 then %>class = 'active' <% end %>>
+			<a href = "#tab_<%= i %>" data-toggle="tab" ><%= category.name %></a>
+		</li>
+		<% end %>
+	</ul>
+	<div id = "tab_content" class = "tab-content">
+		<% @entries_of_category.each_with_index do |entries, i|%>
+		<div class = "tab-pane <% if i == 0 then %>active<% end %>" id = "tab_<%= i %>">
+			<% entries.each do |entry| %>
+			<div class = "entry">
+				<a href = "<%= entry.url %>" target = "_blank"><%= entry.title %></a><br />				　　
+				　　<%= entry.tw_count %> RT　
+				<%= entry.fb_count %> share　
+				<%= entry.site.title %>　
+				<%= entry.published %>
+				<div class = "comment" id = "comment_<%= entry.id %>">
+				<% @comments_of_entries[entry.id].each do |comment|%>
+					<br /><br /><%= comment.user_account %>
+					<br /><%= comment.text %>　
+				<% end %><br /><br />
+				</div>
+			</div>
+			<% end %>
+		</div>
+		<% end %>
+	</div>
+</div>

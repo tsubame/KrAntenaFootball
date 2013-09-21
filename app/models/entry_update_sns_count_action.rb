@@ -3,10 +3,10 @@ require 'open-uri'
 require 'rss'
 require 'assets/sns_count_getter'
 
-# articlesテーブル内の最近の記事の
+# entriesテーブル内の最近の記事の
 # ソーシャルサイトでのシェア数を取得し、テーブル内のデータを更新
 #
-class ArticleUpdateSnsCountAction
+class EntryUpdateSnsCountAction
   
   # この時間より前の記事のシェア数は取得しない 24 → 24時間以内の記事のみが対象
   #MAX_UPDATE_HOUR  = 24
@@ -23,24 +23,24 @@ class ArticleUpdateSnsCountAction
   # 処理実行 
   #
   def exec
-    model = Article.new
+    model = Entry.new
     # 最近の記事を取得してURLを配列に格納
-    articles = model.select_recent_data_limited(@update_hour, @update_count)
-    puts "#{articles.size}件の記事"
+    entries = model.select_recent_data_limited(@update_hour, @update_count)
+    puts "#{entries.size}件の記事"
     urls = []
-    articles.each do |article|
-      urls << article.url
+    entries.each do |entry|
+      urls << entry.url
     end
     # SNSのシェア数を取得
     results = @getter.exec(urls)
         
-    articles.each do |article|
-      article.tw_count = results[article.url][:tw_count]
-      article.fb_count = results[article.url][:fb_count]
+    entries.each do |entry|
+      entry.tw_count = results[entry.url][:tw_count]
+      entry.fb_count = results[entry.url][:fb_count]
     end
     
-    articles.each do |article|
-      article.save
+    entries.each do |entry|
+      entry.save
     end
   end
 

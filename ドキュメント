@@ -136,6 +136,12 @@ articles
 【要実装】
 
 ・テーブル編成　再考
+	sites
+	  rss_fetched_at
+	
+	article
+		disabled
+	  
 ・サイトのモックアップを作る
 ・政治、経済ブログも見れるように
 ・記事のプレビューを見たい

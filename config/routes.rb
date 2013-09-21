@@ -11,12 +11,20 @@ KrAntenaFootball::Application.routes.draw do
   post "site/update"    
   get  "site/index_for_admin"
   get  "site/create_from_rank"
-  
+  get  "site/create_auto"
+  get  "site/create_auto/:id" => "site#create_auto"
+    
   get  "article/index"
+  get  "article/sample"
   get  "article/create_from_rss"
   get  "article/update_share_count"
   get  "article/update_sns_count"  
-      
+  
+  get  "entry/index"
+  get  "entry/fetch"
+  get  "entry/update_sns_count"
+  get  "entry/get_sns_comments"
+        
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
