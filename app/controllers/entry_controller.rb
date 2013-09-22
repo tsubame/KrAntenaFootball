@@ -1,7 +1,7 @@
 class EntryController < ApplicationController
   
   # カテゴリごとに表示する件数
-  GET_COUNT_OF_CATEGORY = 10
+  GET_COUNT_OF_CATEGORY = 30
   
   # エントリを表示
   # 
@@ -23,7 +23,7 @@ class EntryController < ApplicationController
         # ハッシュにコメント取得。キーはエントリID
 
         comments = comment_model.select_by_entry_id(entry.id)
-        puts "#{entry.title} #{comments.size}comments"
+        puts "#{comments.size}comments #{entry.title} "
         @comments_of_entries[entry.id] = comments
       end
     end

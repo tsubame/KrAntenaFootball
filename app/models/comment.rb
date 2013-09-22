@@ -9,7 +9,7 @@ class Comment < ActiveRecord::Base
     begin
       save
     rescue => e
-      puts '保存に失敗しました' + e.message
+      #puts '保存に失敗しました' + e.message
       return false
     end
     

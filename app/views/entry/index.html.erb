@@ -22,7 +22,7 @@
 				<% @comments_of_entries[entry.id].each do |comment|%>
 					<br /><br />
 					<img src = "<%= comment.icon_url %>" />
-					<%= comment.user_account %>	 <%= comment.published %>　
+					<%= comment.user_account %>
 					<br /><%= comment.text %>　
 					
 				<% end %><br /><br />
