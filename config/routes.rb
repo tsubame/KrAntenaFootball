@@ -22,6 +22,7 @@ KrAntenaFootball::Application.routes.draw do
   
   get  "entry/index"
   get  "entry/fetch"
+  get  "entry/sample"
   get  "entry/update_sns_count"
   get  "entry/get_sns_comments"
         

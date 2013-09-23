@@ -10,22 +10,28 @@
 		<% @entries_of_category.each_with_index do |entries, i|%>
 		<div class = "tab-pane <% if i == 0 then %>active<% end %>" id = "tab_<%= i %>">
 			<% entries.each do |entry| %>
-			<div class = "entry">
-				<a href = "<%= entry.url %>" target = "_blank"><%= entry.title %></a><br />				　　
-				　　<%= entry.tw_count %> RT　
-				<%= entry.fb_count %> share　
-				<%= entry.site.title %>　
-				<%= entry.published %>
-				<input type = "button" value = "コメント表示" class = "comment_button" name = "<%= entry.id %>" id = "comment_button_<%= entry.id %>"/>
-				<div class = "comment" id = "comment_<%= entry.id %>">
-
-				<% @comments_of_entries[entry.id].each do |comment|%>
-					<br /><br />
-					<img src = "<%= comment.icon_url %>" />
-					<%= comment.user_account %>
-					<br /><%= comment.text %>　
-					
-				<% end %><br /><br />
+			<div class="accordion" id = "accordion">
+	            <div class="entry accordion-group">
+	            	<!--<div class="accordion-heading">-->
+						<a href = "<%= entry.url %>" target = "_blank"><%= entry.title %></a><br />				　　
+						　　<%= entry.tw_count %> RT　
+						<%= entry.fb_count %> share　
+						<%= entry.site.title %>　
+						<%= entry.published %>
+						<!--<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#comment_<%= entry.id %>">コメント表示</a>-->
+						<input type = "button" value = "コメント表示" data-toggle="collapse" data-parent="#accordion" href="#comment_<%= entry.id %>" class = "accordion-toggle comment_button" name = "<%= entry.id %>" id = "comment_button_<%= entry.id %>"/>
+	                <!--</div>-->
+	                <div id="comment_<%= entry.id %>" class="accordion-body collapse">
+						<div class="accordion-inner">
+							<% @comments_of_entries[entry.id].each do |comment|%>
+								<br /><br />
+								<img src = "<%= comment.icon_url %>" />
+								<%= comment.user_account %>
+								<br /><%= comment.text %>　
+								
+							<% end %><br /><br />
+						</div>
+					</div>
 				</div>
 			</div>
 			<% end %>

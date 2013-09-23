@@ -21,6 +21,8 @@ $(function(){
 		$("#comment_" + id).show();
 	});
 	
+	// アコーディオン非表示
+	//$('.collapse').collapse('hide')
 });
 
 /**

@@ -76,10 +76,12 @@ ActiveRecord::Schema.define(:version => 20130901144608) do
   # エントリーに対するSNSでのコメント（Twitter、Facebook）
   create_table "comments", :force => true do |t|
     t.string   "text",          :null => false
+    t.string   "original_text", :null => false
     t.string   "url",           :null => true
     t.string   "user_name",     :null => true
     t.string   "user_account",  :null => true
     t.string   "icon_url",      :null => true
+    t.string   "criant",      :null => true
     t.string   "sns_name",      :default => "twitter"
     t.references :entry,        :null => false
     t.datetime "published",     :null => false

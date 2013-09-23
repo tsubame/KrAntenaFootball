@@ -10,7 +10,7 @@ class EntryGetSnsCommentsAction
   # この時間より前のエントリのコメントは取得しない 24 → 24時間以内の記事のみが対象
   MAX_UPDATE_HOUR  = 24
   # この件数より前のエントリのコメントは取得しない 180 → 最近180件の記事のみが対象
-  MAX_UPDATE_COUNT = 15 #100
+  MAX_UPDATE_COUNT = 10 #100
   
   def initialize
     @update_hour  = MAX_UPDATE_HOUR
@@ -22,7 +22,16 @@ class EntryGetSnsCommentsAction
   def exec
     # 最近のエントリを取得
     model = Entry.new
-    entries = model.select_recent_data_limited(@update_hour, @update_count)
+    
+    # カテゴリーを取得
+    categories = Category.all
+    entries = []
+    # カテゴリーごとの記事を取得
+    categories.each do |cat|
+      entries += model.select_todays_pop_entries(cat.id, MAX_UPDATE_COUNT)
+    end
+    
+    #entries = model.select_recent_data_limited(@update_hour, @update_count)
     
     puts "#{entries.size}件の記事"
 
@@ -47,8 +56,7 @@ class EntryGetSnsCommentsAction
     
     # URLをキーワードに検索
     searcher = TwitterSearcher.new
-    #comments_hash = searcher.search_twitter_parallel_limited(urls)
-    comments_hash = searcher.get_tw_comments_parallel_limited(entries)
+    comments_hash = searcher.exec(entries)
     comments = []
     
     comments_hash.each do |key, value|

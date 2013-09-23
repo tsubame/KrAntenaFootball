@@ -9,112 +9,16 @@ describe TwitterSearcher do
   end
  
   
-  describe :search_twitter do
-    context "文字列を渡した時" do
-      it "戻り値の配列のサイズが0ではなく、エラーがない" do
-        q = "ジュビロ"
-        #res = subject.search_twitter(q)
-        #res.size.should >= 1
-        subject.error?.should == false
-      end    
-    end
-    
-    context "不正なURLを渡した時" do
-      it "エラーがないこと" do
-        q = "http://30000000022222"
-        #res = subject.search_twitter(q)
-        #subject.error?.should == false
-      end    
-    end
-    
-    context "文字列以外を渡した時" do
-      it "戻り値がfalseであること" do        
-        q = nil
-        #res = subject.search_twitter(q)
-        #res.should == false
-        #subject.error?.should == true
-        
-        q = ""
-        #res = subject.search_twitter(q)
-        #res.should == false
-        #subject.error?.should == true
-      end    
-    end
-  end
-  
-  describe :search_twitter_parallel do
-    context "キーワードを10個渡した時" do
-      it "戻り値の配列のサイズが0ではなく、エラーがない" do   
-        keywords = ["ジュビロ", "柿谷", "セレッソ", "レイソル", "田中", "TJ", "ネイマール", "大谷", "山田大記", "カカー", "ゴラッソ"]
-  
-        #res = subject.search_twitter_parallel(keywords)
-        #res.size.should >= 1        
-        subject.error?.should == false        
-      end      
-    end
-    
-    context "URLを11個渡した時" do
-      it "戻り値の配列のサイズが0ではなく、エラーがない" do   
-        urls = [
-          "http://gendai.ismedia.jp/articles/-/37036",
-          "http://japan.digitaldj-network.com/articles/18235.html",
-          "http://headlines.yahoo.co.jp/hl?a=20130921-00000015-sanspo-ent",
-          "http://atmatome.jp/u/vamonos_pest/3y2mv1y/",
-          "http://zasshi.news.yahoo.co.jp/article?a=20130921-00000011-pseven-ent",
-          "http://lifehack2ch.livedoor.biz/archives/51457477.html",
-          "http://headlines.yahoo.co.jp/hl?a=20130921-00000096-spnannex-ent",
-          "http://www.4gamer.net/games/234/G023417/20130921011/",
-          "http://www.4gamer.net/games/233/G023374/20130921007/",
-          "http://alfalfalfa.com/archives/6824587.html",
-          "http://www.nikkei.com/article/DGXZZO59970440Q3A920C1000000/"
-        ]  
-
-        #res = subject.search_twitter_parallel(urls)
-        #res.size.should >= 1        
-        #subject.error?.should == false
-      end      
-    end
-  end
-  
-  describe :search_twitter_parallel_limited do   
-    context "URLを11個渡した時" do
-      it "戻り値の配列のサイズが0ではなく、エラーがない" do   
-        urls = [
-          "http://gendai.ismedia.jp/articles/-/37036",
-          "http://japan.digitaldj-network.com/articles/18235.html",
-          "http://headlines.yahoo.co.jp/hl?a=20130921-00000015-sanspo-ent",
-          "http://atmatome.jp/u/vamonos_pest/3y2mv1y/",
-          "http://zasshi.news.yahoo.co.jp/article?a=20130921-00000011-pseven-ent",
-          "http://lifehack2ch.livedoor.biz/archives/51457477.html",
-          "http://headlines.yahoo.co.jp/hl?a=20130921-00000096-spnannex-ent",
-          "http://www.4gamer.net/games/234/G023417/20130921011/",
-          "http://www.4gamer.net/games/233/G023374/20130921007/",
-          "http://alfalfalfa.com/archives/6824587.html",
-          "http://www.nikkei.com/article/DGXZZO59970440Q3A920C1000000/"
-        ]  
-        res = {}
-        #res = subject.search_twitter_parallel_limited(urls)
-        #res.size.should >= 1        
-        #subject.error?.should == false
-        
-        res.each do |key, value|
-          #puts ""; puts key
-          #value.each do |c|
-          #  p c
-          #end
-        end
-        
-      end      
-    end
-  end
-  
-  describe :search_twitter_without_rt do   
-    it "戻り値の配列のサイズが0ではなく、エラーがない" do  
+  describe :is_tweet_not_entry_text? do
+    it "返り値がexpectedと同じであること" do
+      tweet_text = "物価水準の違いを調整した為替水準「実質実効為替レート」で、日本円は約30年ぶりの安値をつけた。だが、産業別にみると風景は大きく違う。自動車など輸送用機械は競争力が伸びているが、電気機械産業は韓国との競争で苦戦――。http://nikkei.com/article/DGXNZO60069060T20C13A9NN1000/ …"
+      entry_title = "産業別競争力格差くっきり　実質実効為替レート　　：日本経済新聞"
+      entry_text = "物価水準の違いを調整した為替水準「実質実効為替レート」で、日本円は約30年ぶりの安値をつけた。だが、産業別にみると風景は大きく違う。自動車など輸送用機械は競争力が伸びているが、電気機械産業は韓国との競争で苦戦――。産業別の実質レートという新指標を使うと、産業..."
+      expected = false
       
-      q = "上原"
-      q = "http://headlines.yahoo.co.jp/hl?a=20130921-00000083-spnannex-base"
-      #res = subject.search_twitter_without_rt(q)
-      subject.error?.should == false
+      comment = subject.pickup_comment_from_tweet(tweet_text, entry_title)
+      res = subject.is_tweet_not_entry_text?(comment, entry_text)
+      res.should == expected
     end
   end
   
@@ -122,27 +26,22 @@ describe TwitterSearcher do
     it "戻り値の配列のサイズが0ではなく、エラーがない" do  
       entries = []
       entry = Entry.new
-      entry.id = 1
-      entry.title = "【速報】アスナとシャナが格ゲーで戦う!? 電撃文庫の人気キャラによる対戦格闘『電撃文庫 FIGHTING CLIMAX』が発表！【TGS2013】"
-      entry.url   = "http://dengekionline.com/elem/000/000/715/715326/"
-      #entries << entry
-      entry = Entry.new
-      entry.title = "【ステラ女学院高等科C3部】BD1巻の特典(BB弾)は使用しない方がいい模様｜オタク.com"
-      entry.url   = "http://0taku.livedoor.biz/archives/4539476.html"
-      #entries << entry
-      entry = Entry.new
-      entry.title = "朝日新聞デジタル：国産の全ゲーム保存計画　ファミコンからプレステまで - カルチャー"
-      entry.url   = "http://www.asahi.com/culture/update/0921/OSK201309210002.html"
+      entry.title = "【朗報】iOS7の「超天才的な使い方」が発見される（画像あり）ｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗ"
+      entry.url   = "http://alfalfalfa.com/archives/6826781.html"
       entries << entry
       entry = Entry.new
-      entry.title = "
-      ［TGS 2013］伊藤賢治氏，光田康典氏，下村陽子氏が，旧スクウェア時代の思い出を語った「スクウェア・エニックス コンポーザー スペシャルトークショウ」をレポート - 4Gamer.net"
-
-      entry.url = "http://www.4gamer.net/games/999/G999903/20130922005/"
+      entry.title = "産業別競争力格差くっきり　実質実効為替レート　　：日本経済新聞"
+      entry.url = "http://www.nikkei.com/article/DGXNZO60069060T20C13A9NN1000/"
+      entry.description = "物価水準の違いを調整した為替水準「実質実効為替レート」で、日本円は約30年ぶりの安値をつけた。だが、産業別にみると風景は大きく違う。自動車など輸送用機械は競争力が伸びているが、電気機械産業は韓国との競争で苦戦――。産業別の実質レートという新指標を使うと、産業..."
+      #entries << entry
+      
+      entry = Entry.new
+      entry.title = "【艦これ】艦隊これくしょん／リアル劇場【IL-2】 ‐ ニコニコ動画:Q"
+      entry.url   = "http://www.nicovideo.jp/watch/sm21892733"
       entries << entry
       
       entries.each do |entry|
-        comments, rt_tweets = subject.get_tw_comments_to_entry(entry)
+        comments = subject.get_tw_comments_to_entry(entry)
         subject.error?.should == false
         
         comments.each_with_index do |c, i|
@@ -162,18 +61,6 @@ describe TwitterSearcher do
         entry_title = "週末をより幸福に楽しむためのヒント（そして、平日も週末みたいに楽しくする方法） : ライフハッカー［日本版］"
         
         texts = [
-          "週末をより幸福に楽しむためのヒント（そして、平日も週末みたいに楽しくする方法） : ライフハッカー［日本版］ http://t.co/mkN2ykXuPD",
-          "週末をより幸福に楽しむためのヒント（そして、平日も週末みたいに楽しくする方法） http://t.co/U7pTZYlDLX",
-          "“週末をより幸福に楽しむためのヒント（そして、平日も週末みたいに楽しくする方法） : ライフハッカー［日本版］” http://t.co/qg6LS5LN1G",
-          "“週末をより幸福に楽しむためのヒント（そして、平日も週末みたいに楽しくする方法） : ライフハッカー［日本版］” http://t.co/AFswn0lPG3 #life
-          他25コメント http://t.co/u2FDj4R4MI",
-          "週末をより幸福に楽しむためのヒント（そして、平日も週末みたいに楽しくする方法） : ライフハッカー［日本版］ http://t.co/C7IFtNcRFW",
-          "http://t.co/Jvou7uLJtf",
-          "“@MultipleTi: 週末をより幸福に楽しむためのヒント（そして、平日も週末みたいに楽しくする方法） : ライフハッカー［日本版］ http://t.co/5D6W10uFou”",
-          "【担当記事】週末をより幸福に楽しむためのヒント（そして、平日も週末みたいに楽しくする方法） : ライフハッカー［日本版］ http://t.co/ES0b1kmnc6",
-          "【見てるー(・∀・)】週末をより幸福に楽しむためのヒント（そして、平日も週末みたいに楽しくする方法） http://t.co/objBR0gC8A",
-          "“週末をより幸福に楽しむためのヒント（そして、平日も週末みたいに楽しくする方法） : ライフハッカー［日本版］” http://t.co/DowJgyJuXQ
-          他7コメント http://t.co/aVMLnqiUA5",
           "“週末をより幸福に楽しむためのヒント（そして、平日も週末みたいに楽しくする方法） : ライフハッカー［日本版］” http://t.co/AFswn0lPG3 #life 他25コメント http://t.co/u2FDj4R4MI",
           "週末をより幸福に楽しむためのヒント（そして、平日も週末みたいに楽しくする方法） : ライフハッカー［日本版］ http://t.co/ln44oOvQqh by http://t.co/kzL0xnl5kq"
         ]
@@ -181,8 +68,8 @@ describe TwitterSearcher do
         expected = false
         
         texts.each do |text|
-          comment = subject.pickup_comment_from_tweet(text, entry_title)
-          comment.should == expected
+          #comment = subject.pickup_comment_from_tweet(text, entry_title)
+          #comment.should == expected
         end
 
       end
@@ -226,11 +113,49 @@ describe TwitterSearcher do
         ]
         
         texts.each_with_index do |text, i|
-          comment = subject.pickup_comment_from_tweet(text, entry_title)
-          comment.should == expecteds[i]
+          #comment = subject.pickup_comment_from_tweet(text, entry_title)
+          #comment.should == expecteds[i]
         end
 
       end
+      
+      it "戻り値がexpectedsと同じであること ニコニコ動画(原宿)" do  
+        entry_title = "PS4版アイドルマスター　お願い！シンデレラPV ‐ ニコニコ動画(原宿)"
+        p split_titles = subject.split_title(entry_title)
+        texts = [
+          "PS4版アイドルマスター　お願い！シンデレラPV (3:04) http://nico.ms/sm21873154  #sm21873154　エキプロやめろｗｗｗｗｗ",
+          "【マイリスト】PS4版アイドルマスター　お願い！シンデレラPV http://nico.ms/sm21873154  #sm21873154"
+         ]
+        
+        expecteds = [
+          "エキプロやめろｗｗｗｗｗ",
+          false
+        ]
+        
+        texts.each_with_index do |text, i|
+          #p comment = subject.pickup_comment_from_tweet(text, entry_title, split_titles)
+          #comment.should == expecteds[i]
+        end
+      end
+      
+      it "戻り値がexpectedsと同じであること スクエニ" do  
+        entry_title = "【朗報】iOS7の「超天才的な使い方」が発見される（画像あり）ｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗ"
+        p split_titles = subject.split_title(entry_title)
+        texts = [
+          ": 【朗報】iOS7の「超天才的な使い方」が発見される（画像あり）ｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗ http://alfalfalfa.com/archives/6826781.html … 天才現る、これはスゴイ",
+         ]
+        
+        expecteds = [
+          "天才現る、これはスゴイ"
+        ]
+        
+        texts.each_with_index do |text, i|
+          p comment = subject.pickup_comment_from_tweet(text, entry_title, split_titles)
+          comment.should == expecteds[i]
+        end
+    
+      end
+      
     end
 
   end

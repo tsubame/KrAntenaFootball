@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 class EntryController < ApplicationController
   
   # カテゴリごとに表示する件数
@@ -23,7 +24,7 @@ class EntryController < ApplicationController
         # ハッシュにコメント取得。キーはエントリID
 
         comments = comment_model.select_by_entry_id(entry.id)
-        puts "#{comments.size}comments #{entry.title} "
+        #puts "#{comments.size}comments #{entry.title} "
         @comments_of_entries[entry.id] = comments
       end
     end
@@ -54,6 +55,25 @@ class EntryController < ApplicationController
   def get_sns_comments
     action = EntryGetSnsCommentsAction.new
     action.exec
+    index
+    render "index"
+  end
+  
+  def sample
+    
+    text = " :   天  才 17 天才過ぎるwww"
+    #text = text.sub(/^[\s　:：]+/, "")
+    text = text.sub(/^[　\-\s\/／\|｜：:@…\.）\)＞>＜<→"]+/, "")
+
+    p text
+    
+    #array = []
+    texts = ["a", "b"]
+    array = texts.map do |t|
+      t += ":c"
+    end
+    
+    p array
     index
     render "index"
   end
